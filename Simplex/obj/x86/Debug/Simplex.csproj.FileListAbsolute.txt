@@ -1,0 +1,7 @@
+D:\Программирование\git\Simplex\Simplex\bin\Debug\Simplex.exe
+D:\Программирование\git\Simplex\Simplex\bin\Debug\Simplex.pdb
+D:\Программирование\git\Simplex\Simplex\obj\x86\Debug\Simplex.Form1.resources
+D:\Программирование\git\Simplex\Simplex\obj\x86\Debug\Simplex.Properties.Resources.resources
+D:\Программирование\git\Simplex\Simplex\obj\x86\Debug\Simplex.csproj.GenerateResource.Cache
+D:\Программирование\git\Simplex\Simplex\obj\x86\Debug\Simplex.exe
+D:\Программирование\git\Simplex\Simplex\obj\x86\Debug\Simplex.pdb
