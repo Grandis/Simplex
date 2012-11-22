@@ -19,13 +19,7 @@ namespace Simplex
         double L, x1, x2, x3, x4, x5, x6;
         int x, y;
         double[,] mainMatrix = null;
-        double[,] firstMatrix = 
-            {
-                {5, 2, 3, 1, 0, 0,10},
-                {1, 6, 2, 0, 1, 0, 20},
-                {4, 0, 3, 0, 0, 1, 18},
-                {-6, -5, -9, 0, 0, 0, 0}
-            };
+        
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -39,6 +33,20 @@ namespace Simplex
 
             x = Convert.ToInt32(boundsNumber.Text) + 1;
             y = x + Convert.ToInt32(variablesNumber.Text);
+
+            /*
+              {5, 2, 3, 1, 0, 0,10},
+              {1, 6, 2, 0, 1, 0, 20},
+              {4, 0, 3, 0, 0, 1, 18},
+             */
+
+            double[,] firstMatrix = 
+            {
+                {Convert.ToDouble(textBox4.Text), Convert.ToDouble(textBox5.Text), Convert.ToDouble(textBox6.Text), 1, 0, 0,Convert.ToDouble(textBox7.Text)},
+                {Convert.ToDouble(textBox8.Text), Convert.ToDouble(textBox9.Text), Convert.ToDouble(textBox10.Text), 0, 1, 0, Convert.ToDouble(textBox11.Text)},
+                {Convert.ToDouble(textBox12.Text), Convert.ToDouble(textBox13.Text), Convert.ToDouble(textBox14.Text), 0, 0, 1, Convert.ToDouble(textBox15.Text)},
+                {-Convert.ToDouble(textBox1.Text), -Convert.ToDouble(textBox2.Text), -Convert.ToDouble(textBox3.Text), 0, 0, 0, 0}
+            };
 
             // Значение функции L для начального решения
             //double[] xBegin = { 0, 0, 0, 25, 20, 18 };
