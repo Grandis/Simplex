@@ -18,11 +18,14 @@ namespace Simplex
 
         double L, x1, x2, x3, x4, x5, x6;
         int x, y;
+        int variables = 0;
+        int bounds = 0;
         String[] eqData = { "<=", "=>" };
         double[,] mainMatrix = null;
         
         private void button1_Click(object sender, EventArgs e)
         {
+            mainMatrix = null;
             simplexCount();
         }
 
@@ -35,28 +38,10 @@ namespace Simplex
               {5, 2, 3, 1, 0, 0,10},
               {1, 6, 2, 0, 1, 0, 20},
               {4, 0, 3, 0, 0, 1, 18},
- 
-            double[,] firstMatrix = 
-            {
-                {5, 2, 3, 1, 0, 0,10},
-                {1, 6, 2, 0, 1, 0, 20},
-                {4, 0, 3, 0, 0, 1, 18},
-                {-Convert.ToDouble(textBox1.Text), -Convert.ToDouble(textBox2.Text), -Convert.ToDouble(textBox3.Text), 0, 0, 0, 0}
-            };
-              
-            String matrix = "";
-            for (int i = 0; i < x; i++)
-            {
-                for (int j = 0; j < y; j++)
-                    matrix += firstMatrix[i, j] + " ";
-                matrix += "\n";
-            }
-            MessageBox.Show(matrix);
             */
-
             // Узнаём необходимые размеры массива и создаем его.
-            int variables = Convert.ToInt32(variablesNumber.Text);
-            int bounds = Convert.ToInt32(boundsNumber.Text);
+            variables = Convert.ToInt32(variablesNumber.Text);
+            bounds = Convert.ToInt32(boundsNumber.Text);
             x = bounds + 1;
             y = x + variables;
             double[,] firstMatrix = new double[x, y];
@@ -97,6 +82,7 @@ namespace Simplex
             }
             MessageBox.Show(matrix);
 
+//////////////////////////////////////////////////////////////////////////////////////////////
             
             // Значение функции L для начального решения
             //double[] xBegin = { 0, 0, 0, 25, 20, 18 };
@@ -104,47 +90,44 @@ namespace Simplex
             if (mainMatrix != null) firstMatrix = mainMatrix;
 
             // наименьший элемент в L строке
-            double minCollumn = firstMatrix[3, 0];
+            double minCollumn = firstMatrix[bounds, 0];
             int minCollumnIndex = 0;
-            for (int j = 0; j < 7; j++)
+            for (int j = 0; j < variables; j++)
             {
-                if (firstMatrix[3, j] < minCollumn)
+                if (firstMatrix[bounds, j] < minCollumn)
                 {
-                    minCollumn = firstMatrix[3, j];
+                    minCollumn = firstMatrix[bounds, j];
                     minCollumnIndex = j;
                 }
             }
-            //***************
 
             // наименьший эллемент в найденном столбце
             int minRowIndex = 0;
-            double minRow = firstMatrix[0, 6] / firstMatrix[0, minCollumnIndex];
-            for (int i = 0; i < 3; i++)
+            double minRow = Double.MaxValue;//firstMatrix[0, y-1] / firstMatrix[0, minCollumnIndex];
+            for (int i = 0; i < bounds; i++)
             {
-                if (firstMatrix[i, 6] / firstMatrix[i, minCollumnIndex] < minRow)
+                if (firstMatrix[i, minCollumnIndex] > 0 && firstMatrix[i, y - 1] / firstMatrix[i, minCollumnIndex] < minRow)
                 {
-                    minRow = firstMatrix[i, 6] / firstMatrix[i, minCollumnIndex];
+                    minRow = firstMatrix[i, y-1] / firstMatrix[i, minCollumnIndex];
                     minRowIndex = i;
                 }
             }
-            //********************
+
             double minRowCol = firstMatrix[minRowIndex, minCollumnIndex];
-            //MessageBox.Show(minRowCol.ToString());
 
             // Делим элементы строки
-            for (int j = 0; j < 7; j++)
+            for (int j = 0; j < y; j++)
             {
                 firstMatrix[minRowIndex, j] /= minRowCol;
             }
-            //*******************
-            //MessageBox.Show(minRowIndex.ToString());
 
-            for (int i = 0; i < 4; i++)
+            // Считаем
+            for (int i = 0; i < x; i++)
             {
                 if (i != minRowIndex)
                 {
                     double tempMinCol = firstMatrix[i, minCollumnIndex];
-                    for (int j = 0; j < 7; j++)
+                    for (int j = 0; j < y; j++)
                     {
                         firstMatrix[i, j] -= firstMatrix[minRowIndex, j] * tempMinCol;
                     }
