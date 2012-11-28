@@ -16,15 +16,19 @@ namespace Simplex
             InitializeComponent();
         }
 
-        double L, x1, x2, x3, x4, x5, x6;
-        int x, y;
+        double L;
+        int x, y, tempMinColumn = -1, tempMinRow = -1;
         int variables = 0;
         int bounds = 0;
         String[] eqData = { "<=", "=>" };
         double[,] mainMatrix = null;
+        double[] xArray;
         
         private void button1_Click(object sender, EventArgs e)
         {
+            tempMinColumn = -1;
+            tempMinRow = -1;
+            xArray = null;
             mainMatrix = null;
             simplexCount();
         }
@@ -39,6 +43,7 @@ namespace Simplex
               {1, 6, 2, 0, 1, 0, 20},
               {4, 0, 3, 0, 0, 1, 18},
             */
+            
             // Узнаём необходимые размеры массива и создаем его.
             variables = Convert.ToInt32(variablesNumber.Text);
             bounds = Convert.ToInt32(boundsNumber.Text);
@@ -46,48 +51,51 @@ namespace Simplex
             y = x + variables;
             double[,] firstMatrix = new double[x, y];
 
-            // Добавляем в массив коэфициенты переменных ограничений.
-            for (int i = 0; i < bounds; i++)
+            if (xArray == null) xArray = new double[bounds + variables];
+
+            if (mainMatrix == null)
             {
+                // Добавляем в массив коэфициенты переменных ограничений.
+                for (int i = 0; i < bounds; i++)
+                {
+                    for (int j = 0; j < variables; j++)
+                    {
+                        firstMatrix[i, j] = Convert.ToDouble(dataGridView1.Rows[i].Cells[j].Value);
+                    }
+                }
+
+                // Добавляем в массив единицы базисных переменных
+                for (int i = 0; i < bounds; i++)
+                {
+                    firstMatrix[i, variables + i] = 1;
+                }
+
+                // Добавляем в массив ограничения и заполняем массив переменных.
+                for (int i = 0; i < bounds; i++)
+                {
+                    firstMatrix[i, y - 1] = Convert.ToDouble(dataGridView1.Rows[i].Cells[dataGridView1.Columns.Count - 1].Value);
+                    xArray[variables + i] = Convert.ToDouble(dataGridView1.Rows[i].Cells[dataGridView1.Columns.Count - 1].Value);
+                }
+
+                // Добавляем в массив исходное уравнение (с обратными знаками!).
                 for (int j = 0; j < variables; j++)
                 {
-                    firstMatrix[i, j] = Convert.ToDouble(dataGridView1.Rows[i].Cells[j].Value);
+                    firstMatrix[x - 1, j] = Convert.ToDouble(dataGridView2.Rows[0].Cells[j].Value) * -1;
                 }
-            }
 
-            // Добавляем в массив единицы базисных переменных
-            for (int i = 0; i < bounds; i++)
-            {
-                firstMatrix[i, variables + i] = 1;
+                String matrix = "Начальная матрица\n";
+                for (int i = 0; i < x; i++)
+                {
+                    for (int j = 0; j < y; j++)
+                        matrix += firstMatrix[i, j] + " ";
+                    matrix += "\n";
+                }
+                MessageBox.Show(matrix);
             }
-
-            // Добавляем в массив ограничения.
-            for (int i = 0; i < bounds; i++)
-            {
-                firstMatrix[i, y - 1] = Convert.ToDouble(dataGridView1.Rows[i].Cells[dataGridView1.Columns.Count-1].Value);
-            }
-
-            // Добавляем в массив исходное уравнение (с обратными знаками!).
-            for (int j = 0; j < variables; j++)
-            {
-                firstMatrix[x-1, j] = Convert.ToDouble(dataGridView2.Rows[0].Cells[j].Value) * -1;
-            }
-
-            String matrix = "";
-            for (int i = 0; i < x; i++)
-            {
-                for (int j = 0; j < y; j++)
-                    matrix += firstMatrix[i, j] + " ";
-                matrix += "\n";
-            }
-            MessageBox.Show(matrix);
 
 //////////////////////////////////////////////////////////////////////////////////////////////
             
-            // Значение функции L для начального решения
-            //double[] xBegin = { 0, 0, 0, 25, 20, 18 };
-
-            if (mainMatrix != null) firstMatrix = mainMatrix;
+            else firstMatrix = mainMatrix;
 
             // наименьший элемент в L строке
             double minCollumn = firstMatrix[bounds, 0];
@@ -134,6 +142,20 @@ namespace Simplex
                 }
             }
 
+            //matrix = "";
+            //for (int i = 0; i < x; i++)
+            //{
+            //    for (int j = 0; j < y; j++)
+            //        matrix += firstMatrix[i, j] + " ";
+            //    matrix += "\n";
+            //}
+            //MessageBox.Show(matrix);
+
+            if (tempMinRow != -1 && tempMinColumn != -1) xArray[tempMinColumn] = firstMatrix[tempMinRow, y - 1];
+            xArray[minCollumnIndex] = firstMatrix[minRowIndex, y - 1];
+            tempMinColumn = minCollumnIndex;
+            tempMinRow = minRowIndex;
+
             // Проверяем, все ли элементы функции L положительны.
             bool check = true;
             for (int j = 0; j < y - 1; j++)
@@ -145,7 +167,10 @@ namespace Simplex
             if (check)
             {
                 L = firstMatrix[x - 1, y - 1];
-                MessageBox.Show("Целевая функция равна " + L.ToString());
+                String xLast = "Переменные: X(";
+                for (int i = 0; i < variables; i++) xLast += xArray[i] + "; ";
+                xLast = xLast.Trim() + ").";
+                MessageBox.Show("Целевая функция равна " + L.ToString() + ".\n" + xLast);
             }
 
             // Если нет, то повторяем функцию simplexCount().
