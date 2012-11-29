@@ -80,7 +80,8 @@ namespace Simplex
                 // Добавляем в массив исходное уравнение (с обратными знаками!).
                 for (int j = 0; j < variables; j++)
                 {
-                    firstMatrix[x - 1, j] = Convert.ToDouble(dataGridView2.Rows[0].Cells[j].Value) * -1;
+                    if (comboBox1.SelectedItem.Equals("Min")) firstMatrix[x - 1, j] = Convert.ToDouble(dataGridView2.Rows[0].Cells[j].Value);
+                    else firstMatrix[x - 1, j] = Convert.ToDouble(dataGridView2.Rows[0].Cells[j].Value) * -1;
                 }
 
                 String matrix = "Начальная матрица\n";
@@ -166,9 +167,10 @@ namespace Simplex
             // Если да, то задача решена.
             if (check)
             {
-                L = firstMatrix[x - 1, y - 1];
+                if (comboBox1.SelectedItem.Equals("Min")) L = firstMatrix[x - 1, y - 1] * -1;
+                else L = firstMatrix[x - 1, y - 1];
                 String xLast = "Переменные: X(";
-                for (int i = 0; i < variables; i++) xLast += xArray[i] + "; ";
+                for (int i = 0; i < variables; i++) xLast += xArray[i] + ";  ";
                 xLast = xLast.Trim() + ").";
                 MessageBox.Show("Целевая функция равна " + L.ToString() + ".\n" + xLast);
             }
