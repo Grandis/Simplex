@@ -6,3 +6,5 @@ D:\Программирование\git\Simplex\Simplex\obj\x86\Debug\Simplex.cs
 D:\Программирование\git\Simplex\Simplex\obj\x86\Debug\Simplex.exe
 D:\Программирование\git\Simplex\Simplex\obj\x86\Debug\Simplex.pdb
 D:\Программирование\git\Simplex\Simplex\obj\x86\Debug\Simplex.csprojResolveAssemblyReference.cache
+D:\Программирование\git\Simplex\Simplex\obj\x86\Debug\Simplex.Example.resources
+D:\Программирование\git\Simplex\Simplex\obj\x86\Debug\Simplex.Count.resources
