@@ -14,6 +14,28 @@ namespace Simplex
         public Example()
         {
             InitializeComponent();
+            variablesNumber.Text = "3";
+            boundsNumber.Text = "3";
+            comboBox1.Text = "Max";
+
+            dataGridView2.Rows[0].Cells[0].Value = 6;
+            dataGridView2.Rows[0].Cells[1].Value = 5;
+            dataGridView2.Rows[0].Cells[2].Value = 9;
+
+            dataGridView1.Rows[0].Cells[0].Value = 5;
+            dataGridView1.Rows[0].Cells[1].Value = 2;
+            dataGridView1.Rows[0].Cells[2].Value = 3;
+            dataGridView1.Rows[0].Cells[4].Value = 25;
+
+            dataGridView1.Rows[1].Cells[0].Value = 1;
+            dataGridView1.Rows[1].Cells[1].Value = 6;
+            dataGridView1.Rows[1].Cells[2].Value = 2;
+            dataGridView1.Rows[1].Cells[4].Value = 20;
+
+            dataGridView1.Rows[2].Cells[0].Value = 4;
+            dataGridView1.Rows[2].Cells[1].Value = 0;
+            dataGridView1.Rows[2].Cells[2].Value = 3;
+            dataGridView1.Rows[2].Cells[4].Value = 18;
         }
 
         double L;
@@ -210,6 +232,7 @@ namespace Simplex
         {
             DataGridViewComboBoxColumn cbEqual = new DataGridViewComboBoxColumn();
             cbEqual.DataSource = eqData;
+            
             try
             {
                 if (variablesNumber.Text != "" && Convert.ToInt32(variablesNumber.Text) > 0)

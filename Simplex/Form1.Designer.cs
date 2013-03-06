@@ -34,7 +34,7 @@
             this.countToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.проверкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.matlabToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mSExcellToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ExcelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.справкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.оПрограммеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -72,7 +72,7 @@
             // 
             this.проверкаToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.matlabToolStripMenuItem,
-            this.mSExcellToolStripMenuItem});
+            this.ExcelToolStripMenuItem});
             this.проверкаToolStripMenuItem.Name = "проверкаToolStripMenuItem";
             this.проверкаToolStripMenuItem.Size = new System.Drawing.Size(73, 20);
             this.проверкаToolStripMenuItem.Text = "Проверка";
@@ -83,11 +83,12 @@
             this.matlabToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.matlabToolStripMenuItem.Text = "Matlab";
             // 
-            // mSExcellToolStripMenuItem
+            // ExcelToolStripMenuItem
             // 
-            this.mSExcellToolStripMenuItem.Name = "mSExcellToolStripMenuItem";
-            this.mSExcellToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.mSExcellToolStripMenuItem.Text = "MS Excell";
+            this.ExcelToolStripMenuItem.Name = "ExcelToolStripMenuItem";
+            this.ExcelToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.ExcelToolStripMenuItem.Text = "MS Excel";
+            this.ExcelToolStripMenuItem.Click += new System.EventHandler(this.ExcelToolStripMenuItem_Click);
             // 
             // справкаToolStripMenuItem
             // 
@@ -101,25 +102,28 @@
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.helpToolStripMenuItem.Text = "Помощь";
             this.helpToolStripMenuItem.Click += new System.EventHandler(this.helpToolStripMenuItem_Click);
             // 
             // оПрограммеToolStripMenuItem
             // 
             this.оПрограммеToolStripMenuItem.Name = "оПрограммеToolStripMenuItem";
-            this.оПрограммеToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.оПрограммеToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.оПрограммеToolStripMenuItem.Text = "О программе";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.Window;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.ClientSize = new System.Drawing.Size(526, 383);
             this.Controls.Add(this.menuStrip1);
+            this.DoubleBuffered = true;
             this.MainMenuStrip = this.menuStrip1;
-            this.MinimumSize = new System.Drawing.Size(542, 0);
+            this.MinimumSize = new System.Drawing.Size(542, 421);
             this.Name = "Form1";
             this.Text = "Симплекс метод";
             this.Resize += new System.EventHandler(this.Form1_Resize);
@@ -137,7 +141,7 @@
         private System.Windows.Forms.ToolStripMenuItem countToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem проверкаToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem matlabToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem mSExcellToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ExcelToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem справкаToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem оПрограммеToolStripMenuItem;

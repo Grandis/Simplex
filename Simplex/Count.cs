@@ -6,11 +6,17 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Microsoft.Office.Interop.Excel;
 
 namespace Simplex
 {
     public partial class Count : UserControl
     {
+        private Microsoft.Office.Interop.Excel.Application objExcel;
+        private Microsoft.Office.Interop.Excel.Workbook objWorkBook;
+        private Microsoft.Office.Interop.Excel.Worksheet objWorkSheet;
+
+
         public Count()
         {
             InitializeComponent();
@@ -63,7 +69,14 @@ namespace Simplex
                     {
                         for (int j = 0; j < variables; j++)
                         {
-                            firstMatrix[i, j] = Convert.ToDouble(dataGridView1.Rows[i].Cells[j].Value);
+                            if (dataGridView1.Rows[i].Cells[variables].Value.ToString() == "<=")
+                            {
+                                firstMatrix[i, j] = Convert.ToDouble(dataGridView1.Rows[i].Cells[j].Value);
+                            }
+                            else
+                            {
+                                firstMatrix[i, j] = Convert.ToDouble(dataGridView1.Rows[i].Cells[j].Value) * -1;
+                            }
                         }
                     }
 
@@ -76,7 +89,14 @@ namespace Simplex
                     // Добавляем в массив ограничения и заполняем массив переменных.
                     for (int i = 0; i < bounds; i++)
                     {
-                        firstMatrix[i, y - 1] = Convert.ToDouble(dataGridView1.Rows[i].Cells[dataGridView1.Columns.Count - 1].Value);
+                        if (dataGridView1.Rows[i].Cells[variables].Value.ToString() == "<=")
+                        {
+                            firstMatrix[i, y - 1] = Convert.ToDouble(dataGridView1.Rows[i].Cells[dataGridView1.Columns.Count - 1].Value);
+                        }
+                        else
+                        {
+                            firstMatrix[i, y - 1] = Convert.ToDouble(dataGridView1.Rows[i].Cells[dataGridView1.Columns.Count - 1].Value) * -1;
+                        }
                         xArray[variables + i] = Convert.ToDouble(dataGridView1.Rows[i].Cells[dataGridView1.Columns.Count - 1].Value);
                     }
 
@@ -260,6 +280,48 @@ namespace Simplex
                 MessageBox.Show(ex.Message);
                 boundsNumber.Text = "";
             }
+        }
+
+        public void excel()
+        {
+            try
+            {
+                objExcel = new Microsoft.Office.Interop.Excel.Application();
+                objWorkBook = objExcel.Workbooks.Add(System.Reflection.Missing.Value);
+                objWorkSheet = objWorkBook.Sheets[1];
+
+                for (int i = 0; i < Convert.ToInt32(variablesNumber.Text); i++)
+                {
+                    objExcel.Cells[1, i + 2] = dataGridView2.Rows[0].Cells[i].Value;
+                    
+                }
+
+                for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                    {
+                        DataGridViewRow row = dataGridView1.Rows[i]; // строки
+                        for (int j = 0; j < row.Cells.Count; j++) //цикл по ячейкам строки
+                        {
+                        objExcel.Cells[i + 3, j + 1] = row.Cells[j].Value;
+                        }
+                    }
+                objWorkBook.SaveAs("check.xls");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                {
+                    objWorkBook.Close();
+                    objExcel.Quit();
+                    objWorkBook = null;
+                    objWorkSheet = null;
+                    objExcel = null;
+                    //System.Diagnostics.Process.Start("check.xls");
+                }
+            }
+            
         }
     }
 }

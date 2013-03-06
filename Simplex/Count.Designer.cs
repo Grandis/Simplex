@@ -47,6 +47,7 @@
             // 
             this.boundsNumber.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.boundsNumber.Location = new System.Drawing.Point(432, 13);
+            this.boundsNumber.MaxLength = 1;
             this.boundsNumber.Name = "boundsNumber";
             this.boundsNumber.Size = new System.Drawing.Size(100, 20);
             this.boundsNumber.TabIndex = 27;
@@ -55,6 +56,7 @@
             // variablesNumber
             // 
             this.variablesNumber.Location = new System.Drawing.Point(154, 10);
+            this.variablesNumber.MaxLength = 1;
             this.variablesNumber.Name = "variablesNumber";
             this.variablesNumber.Size = new System.Drawing.Size(100, 20);
             this.variablesNumber.TabIndex = 26;

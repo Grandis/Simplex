@@ -78,6 +78,11 @@ namespace Simplex
             Help.ShowHelp(this, "help.chm");
         }
 
+        private void ExcelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            count.excel();
+        }
+
         
     }
 }

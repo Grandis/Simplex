@@ -46,7 +46,9 @@
             // boundsNumber
             // 
             this.boundsNumber.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.boundsNumber.Enabled = false;
             this.boundsNumber.Location = new System.Drawing.Point(432, 12);
+            this.boundsNumber.MaxLength = 2;
             this.boundsNumber.Name = "boundsNumber";
             this.boundsNumber.Size = new System.Drawing.Size(100, 20);
             this.boundsNumber.TabIndex = 19;
@@ -54,7 +56,9 @@
             // 
             // variablesNumber
             // 
+            this.variablesNumber.Enabled = false;
             this.variablesNumber.Location = new System.Drawing.Point(154, 9);
+            this.variablesNumber.MaxLength = 2;
             this.variablesNumber.Name = "variablesNumber";
             this.variablesNumber.Size = new System.Drawing.Size(100, 20);
             this.variablesNumber.TabIndex = 18;
@@ -119,6 +123,7 @@
             this.dataGridView2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView2.Enabled = false;
             this.dataGridView2.Location = new System.Drawing.Point(42, 19);
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.Size = new System.Drawing.Size(362, 62);
@@ -132,6 +137,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Enabled = false;
             this.dataGridView1.Location = new System.Drawing.Point(13, 142);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
@@ -142,6 +148,7 @@
             // 
             this.comboBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBox1.Enabled = false;
             this.comboBox1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Items.AddRange(new object[] {
