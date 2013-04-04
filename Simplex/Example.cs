@@ -44,6 +44,7 @@ namespace Simplex
         int bounds = 0;
         String[] eqData = { "<=", "=>" };
         double[,] mainMatrix = null;
+        double[,] firstMatrix;
         double[] xArray;
         bool check = true;
 
@@ -54,6 +55,67 @@ namespace Simplex
             xArray = null;
             mainMatrix = null;
             simplexCount();
+        }
+
+        public void firstMatrixFilling()
+        {
+            firstMatrix = new double[x, y];
+
+            if (xArray == null) xArray = new double[bounds + variables];
+
+            if (mainMatrix == null)
+            {
+                // Добавляем в массив коэфициенты переменных ограничений.
+                for (int i = 0; i < bounds; i++)
+                {
+                    for (int j = 0; j < variables; j++)
+                    {
+                        firstMatrix[i, j] = Convert.ToDouble(dataGridView1.Rows[i].Cells[j].Value);
+                    }
+                }
+
+                // Добавляем в массив единицы базисных переменных
+                for (int i = 0; i < bounds; i++)
+                {
+                    firstMatrix[i, variables + i] = 1;
+                }
+
+                // Добавляем в массив ограничения и заполняем массив переменных.
+                for (int i = 0; i < bounds; i++)
+                {
+                    firstMatrix[i, y - 1] = Convert.ToDouble(dataGridView1.Rows[i].Cells[dataGridView1.Columns.Count - 1].Value);
+                    xArray[variables + i] = Convert.ToDouble(dataGridView1.Rows[i].Cells[dataGridView1.Columns.Count - 1].Value);
+                }
+
+                // Добавляем в массив исходное уравнение (с обратными знаками!).
+                for (int j = 0; j < variables; j++)
+                {
+                    if (comboBox1.SelectedItem.Equals("Min")) firstMatrix[x - 1, j] = Convert.ToDouble(dataGridView2.Rows[0].Cells[j].Value);
+                    else firstMatrix[x - 1, j] = Convert.ToDouble(dataGridView2.Rows[0].Cells[j].Value) * -1;
+                }
+
+                String matrix = "Начальная матрица\n";
+                for (int i = 0; i < x; i++)
+                {
+                    for (int j = 0; j < y; j++)
+                        matrix += firstMatrix[i, j] + " ";
+                    matrix += "\n";
+                }
+                MessageBox.Show(matrix);
+
+                // Проверяем, все ли элементы функции L положительны.
+                for (int j = 0; j < y - 1; j++)
+                {
+                    if (firstMatrix[x - 1, j] < 0) check = false;
+                }
+                if (check)
+                {
+                    MessageBox.Show("Целевая функция L = 0.");
+                    return;
+                }
+            }
+
+            else firstMatrix = mainMatrix;
         }
 
         public void simplexCount()
@@ -74,67 +136,8 @@ namespace Simplex
                 bounds = Convert.ToInt32(boundsNumber.Text);
                 x = bounds + 1;
                 y = x + variables;
-                double[,] firstMatrix = new double[x, y];
 
-                if (xArray == null) xArray = new double[bounds + variables];
-
-                if (mainMatrix == null)
-                {
-                    // Добавляем в массив коэфициенты переменных ограничений.
-                    for (int i = 0; i < bounds; i++)
-                    {
-                        for (int j = 0; j < variables; j++)
-                        {
-                            firstMatrix[i, j] = Convert.ToDouble(dataGridView1.Rows[i].Cells[j].Value);
-                        }
-                    }
-
-                    // Добавляем в массив единицы базисных переменных
-                    for (int i = 0; i < bounds; i++)
-                    {
-                        firstMatrix[i, variables + i] = 1;
-                    }
-
-                    // Добавляем в массив ограничения и заполняем массив переменных.
-                    for (int i = 0; i < bounds; i++)
-                    {
-                        firstMatrix[i, y - 1] = Convert.ToDouble(dataGridView1.Rows[i].Cells[dataGridView1.Columns.Count - 1].Value);
-                        xArray[variables + i] = Convert.ToDouble(dataGridView1.Rows[i].Cells[dataGridView1.Columns.Count - 1].Value);
-                    }
-
-                    // Добавляем в массив исходное уравнение (с обратными знаками!).
-                    for (int j = 0; j < variables; j++)
-                    {
-                        if (comboBox1.SelectedItem.Equals("Min")) firstMatrix[x - 1, j] = Convert.ToDouble(dataGridView2.Rows[0].Cells[j].Value);
-                        else firstMatrix[x - 1, j] = Convert.ToDouble(dataGridView2.Rows[0].Cells[j].Value) * -1;
-                    }
-
-                    String matrix = "Начальная матрица\n";
-                    for (int i = 0; i < x; i++)
-                    {
-                        for (int j = 0; j < y; j++)
-                            matrix += firstMatrix[i, j] + " ";
-                        matrix += "\n";
-                    }
-                    MessageBox.Show(matrix);
-
-                    // Проверяем, все ли элементы функции L положительны.
-                    for (int j = 0; j < y - 1; j++)
-                    {
-                        if (firstMatrix[x - 1, j] < 0) check = false;
-                    }
-                    if (check)
-                    {
-                        MessageBox.Show("Целевая функция L = 0.");
-                        return;
-                    }
-                }
-
-
-    //////////////////////////////////////////////////////////////////////////////////////////////
-
-
-                else firstMatrix = mainMatrix;
+                firstMatrixFilling();
 
                 // наименьший элемент в L строке
                 double minCollumn = firstMatrix[bounds, 0];
